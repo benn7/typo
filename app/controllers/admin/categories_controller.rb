@@ -45,6 +45,11 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def save_category
+    unless @category.valid?
+      redirect_to :action => 'new'
+      flash[:error] = _("Name field cannot be empty")
+      return
+    end
     if @category.save!
       flash[:notice] = _('Category was successfully saved.')
     else
