@@ -16,6 +16,14 @@ describe Admin::CategoriesController do
     assert_response :redirect, :action => 'index'
   end
 
+  describe "test_new" do
+    it "renders the 'new' template" do
+      get :new
+      response.should render_template('new')
+      assigns(:category).should_not be nil
+    end
+  end
+
   describe "test_edit" do
     before(:each) do
       get :edit, :id => Factory(:category).id

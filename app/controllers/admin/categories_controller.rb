@@ -25,12 +25,14 @@ class Admin::CategoriesController < Admin::BaseController
 
   def new_or_edit
     @categories = Category.find(:all)
-    @category = Category.find(params[:id])
+    id = params[:id]
+    @category = get_or_create_category(id)
     @category.attributes = params[:category]
+
     if request.post?
       respond_to do |format|
         format.html { save_category }
-        format.js do 
+        format.js do
           @category.save
           @article = Article.new
           @article.categories << @category
@@ -49,6 +51,11 @@ class Admin::CategoriesController < Admin::BaseController
       flash[:error] = _('Category could not be saved.')
     end
     redirect_to :action => 'new'
+  end
+
+  def get_or_create_category(id = null)
+    return Category.find(id) if id
+    Category.new
   end
 
 end

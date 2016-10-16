@@ -33,7 +33,6 @@ class Category < ActiveRecord::Base
   end
   extend Finders
 
-
   def self.to_prefix
     'category'
   end
